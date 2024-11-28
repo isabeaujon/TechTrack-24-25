@@ -1,3 +1,6 @@
+![Schermafbeelding 2024-11-28 om 22 02 00](https://github.com/user-attachments/assets/6288b267-e880-452c-8c12-6930b3253595)
+![Schermafbeelding 2024-11-28 om 22 03 23](https://github.com/user-attachments/assets/b0a8bd64-07b6-4b64-a50b-554a594364ff)
+
 # Levensverwachting per jaar
 Een datavisualisatie waarbij de levensverwachting per land door de jaren heen zichtbaar wordt.
 
@@ -9,11 +12,17 @@ Op de kaart worden de levensverwachtingen weergegeven als cirkels, waarbij elke 
 
 Als je liever alle landen naast elkaar wilt zien zonder telkens op een land te moeten klikken, kun je de barchart gebruiken. Hier worden de landen naast elkaar weergegeven. Met de slider daaronder kun je door de jaren heen navigeren en het verschil in levensverwachting tussen de jaren zien.
 
+
 ## Gebouwd met:
 - Svelte
 - SvelteKit
 - LeafLet
 - Deployment: Vercel
+
+### Hulpmiddelen:
+- ChatGPT
+- https://leafletjs.com/examples.html
+- https://svelte.dev/
 
 ## Installatie en gebruik
 1. Clone de Repository: Open de terminal en voer de volgende commando uit:
@@ -30,7 +39,8 @@ npm run dev
 
 
 
+
 ## Gemaakt door:
-Naam: Isa Beaujon
-Studentnummer: 500798069
+Naam: Isa Beaujon <br>
+Studentnummer: 500798069 <br>
 Vak: Minor information design - tech track
