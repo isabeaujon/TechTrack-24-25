@@ -54,10 +54,11 @@
                     weight: 2,
                     fillOpacity: 0.6,
                 })
-                    .bindPopup(
-                        `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${lifeExpectancyYear}`,
-                    )
-                    .addTo(markersLayer); // Voeg marker toe aan de laag
+                .bindPopup(
+    `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(lifeExpectancyYear)}`
+)
+.addTo(markersLayer); // Voeg marker toe aan de laag
+
             });
         }
 
