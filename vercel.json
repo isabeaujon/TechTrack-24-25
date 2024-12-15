@@ -1,17 +1,18 @@
 {
-    "routes": [
-      {
-        "src": "/Dataset_datavisualisatie_kopie.csv",
-        "dest": "/Dataset_datavisualisatie_kopie.csv"
-      }
-    ],
-    "headers": [
-      {
-        "source": "/Dataset_datavisualisatie_kopie.csv",
-        "headers": [
-          { "key": "Cache-Control", "value": "no-cache" }
-        ]
-      }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/old-path", "destination": "/new-path" }
+  ],
+  "redirects": [
+    { "source": "/old-url", "destination": "/new-url", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "max-age=0, s-maxage=86400" }
+      ]
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
