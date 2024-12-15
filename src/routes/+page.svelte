@@ -27,7 +27,7 @@
     onMount(async () => {
         try {
             // Haal de CSV op
-            const response = await fetch("./Dataset_datavisualisatie_kopie.csv");
+            const response = await fetch("/Dataset_datavisualisatie_kopie.csv");
             if (!response.ok) {
                 console.error("Fout bij het laden van CSV:", response.status, response.statusText);
                 return;

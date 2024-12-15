@@ -1,0 +1,17 @@
+{
+    "routes": [
+      {
+        "src": "/Dataset_datavisualisatie_kopie.csv",
+        "dest": "/Dataset_datavisualisatie_kopie.csv"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/Dataset_datavisualisatie_kopie.csv",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache" }
+        ]
+      }
+    ]
+  }
+  
