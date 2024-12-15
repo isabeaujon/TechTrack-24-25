@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "leaflet/dist/leaflet.css"; // Importeren van de CSS
     import { onMount } from "svelte"; // Haal onMount uit Svelte
 
     export let mapData: {
@@ -12,67 +13,72 @@
 
     let mapContainer: HTMLDivElement;
 
+    // Declareren van 'leaf' als 'any' om typefouten te vermijden
+    let leaf: any;
+    let map: any;
+    let markersLayer: any;
+
+    // Dynamische import van Leaflet
     onMount(async () => {
-        const leaf = (await import("leaflet")).default;
+        // Dynamisch importeren van Leaflet
+        leaf = (await import("leaflet")).default;
 
-        // Maak een kaart en zet het centrum en de zoom in
-        const map = leaf
-            .map(mapContainer, {
-                center: [20, 0], // Zet de kaart op het middelpunt van de wereld
-                zoom: 2, // Beginzoomniveau
-                minZoom: 2,
-                maxZoom: 4,
-                dragging: false,
-            })
-            .setView([20, 0], 2);
+        // Maak de kaart aan
+        map = leaf.map(mapContainer, {
+            center: [20, 0],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 4,
+            dragging: false,
+        });
 
-        // Voeg OpenStreetMap tegel-laag toe
+        // Voeg de OpenStreetMap-laag toe
         leaf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution:
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
-        // Maak een nieuwe laag aan voor de markers
-        let markersLayer = leaf.layerGroup().addTo(map);
+        // Maak een laag voor de markers
+        markersLayer = leaf.layerGroup().addTo(map);
 
-        updateMarkers();
-
-        // Functie om markers te updaten
-        function updateMarkers() {
-            markersLayer.clearLayers(); // Verwijder bestaande markers
-
-            mapData.forEach((item) => {
-                const lifeExpectancyYear = item.lifeExpectancy[selectedYear];
-
-                if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear))
-                    return;
-
-                const color = getColorForLifeExpectancy(lifeExpectancyYear);
-
-                // Maak een nieuwe marker aan
-                const marker = leaf.circleMarker([item.lat, item.lng], {
-                    color: color, // Kleur van de marker
-                    radius: 8, // Grootte van de marker
-                    weight: 2,
-                    fillOpacity: 0.6,
-                });
-
-                marker
-                    .bindPopup(
-                        `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(
-                            lifeExpectancyYear,
-                        )}`,
-                    )
-                    .addTo(markersLayer); // Voeg marker toe aan de laag
-            });
-        }
-
-        // Update markers bij mount en wanneer de kaart geladen is
-        updateMarkers();
+        // Voeg een 'ready' event listener toe om de kaartgrootte te herberekenen
         map.whenReady(() => map.invalidateSize());
     });
 
-    // Functie die kleur bepaalt op basis van levensverwachting
+    // Maak de markers opnieuw aan telkens wanneer de data verandert
+    $: {
+        if (map && markersLayer) {
+            updateMarkers();
+        }
+    }
+
+    // Functie die markers updatet
+    function updateMarkers() {
+        if (!map) return;
+
+        markersLayer.clearLayers(); // Verwijder bestaande markers
+
+        mapData.forEach((item) => {
+            const lifeExpectancyYear = item.lifeExpectancy[selectedYear];
+
+            if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear)) return;
+
+            const color = getColorForLifeExpectancy(lifeExpectancyYear);
+
+            leaf.circleMarker([item.lat, item.lng], {
+                color: color,
+                radius: 8,
+                weight: 2,
+                fillOpacity: 0.6,
+            })
+                .bindPopup(
+                    `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(lifeExpectancyYear)}`
+                )
+                .addTo(markersLayer);
+        });
+    }
+
+    // Functie om de kleur te bepalen op basis van levensverwachting
     function getColorForLifeExpectancy(lifeExpectancy: number) {
         if (lifeExpectancy > 80) return "#008000"; // Groen voor hoge levensverwachting
         if (lifeExpectancy > 70) return "#FFA500"; // Oranje voor middelhoge levensverwachting
