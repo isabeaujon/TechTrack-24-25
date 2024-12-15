@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from "svelte"; // Haal onMount uit Svelte
+    import { onMount, afterUpdate } from "svelte"; // Haal onMount uit Svelte
 
     export let mapData: {
         country: string;
@@ -35,33 +35,40 @@
         // Maak een nieuwe laag aan voor de markers
         let markersLayer = leaf.layerGroup().addTo(map);
 
+        updateMarkers();
+
         // Functie om markers te updaten
-        function updateMarkers() {
-            markersLayer.clearLayers(); // Verwijder bestaande markers
+        // Functie om markers te updaten
+function updateMarkers() {
+    markersLayer.clearLayers(); // Verwijder bestaande markers
 
-            mapData.forEach((item) => {
-                const lifeExpectancyYear = item.lifeExpectancy[selectedYear];
+    mapData.forEach((item) => {
+        const lifeExpectancyYear = item.lifeExpectancy[selectedYear];
 
-                if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear))
-                    return;
+        if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear)) return;
 
-                const color = getColorForLifeExpectancy(lifeExpectancyYear);
+        const color = getColorForLifeExpectancy(lifeExpectancyYear);
 
-                // Maak een nieuwe marker aan
-                leaf.circleMarker([item.lat, item.lng], {
-                    color: color, // Kleur van de marker
-                    radius: 8, // Grootte van de marker
-                    weight: 2,
-                    fillOpacity: 0.6,
-                })
-                .bindPopup(
-    `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(lifeExpectancyYear)}`
-)
-.addTo(markersLayer); // Voeg marker toe aan de laag
+        // Maak een nieuwe marker aan
+        const marker = leaf.circleMarker([item.lat, item.lng], {
+            color: color, // Kleur van de marker
+            radius: 8, // Grootte van de marker
+            weight: 2,
+            fillOpacity: 0.6,
+        });
 
-            });
-        }
+        marker
+            .bindPopup(
+                `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(
+                    lifeExpectancyYear
+                )}`
+            )
+            .addTo(markersLayer); // Voeg marker toe aan de laag
+    });
+}
 
+
+        
         // Update markers bij mount en wanneer de kaart geladen is
         updateMarkers();
         map.whenReady(() => map.invalidateSize());
@@ -73,7 +80,6 @@
         if (lifeExpectancy > 70) return "#FFA500"; // Oranje voor middelhoge levensverwachting
         return "#D2042D"; // Rood voor lage levensverwachting
     }
-    
 </script>
 
 <!-- Container voor de kaart -->

@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import Worldmap from "../components/Worldmap.svelte";
     import Barchart from "../components/Barchart.svelte";
+    
 
     // Definieer het type voor de levensverwachting data
     type LifeExpectancyDataItem = {
@@ -36,6 +37,7 @@
             const csvText = await response.text();
             console.log("CSV geladen:", csvText);
 
+            
             // Converteer CSV naar data
             lifeExpectancyData = convertCSVToGeoData(csvText);
             filterLifeExpectancyByYear(selectedYear); // Filter direct op het geselecteerde jaar
