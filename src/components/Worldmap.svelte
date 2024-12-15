@@ -69,9 +69,9 @@
 
     // Functie die kleur bepaalt op basis van levensverwachting
     function getColorForLifeExpectancy(lifeExpectancy: number) {
-        if (lifeExpectancy > 80) return "#4CAF50"; // Groen voor hoge levensverwachting
-        if (lifeExpectancy > 70) return "#FFEB3B"; // Geel voor middelhoge levensverwachting
-        return "#FF5722"; // Rood voor lage levensverwachting
+        if (lifeExpectancy > 80) return "#008000"; // Groen voor hoge levensverwachting
+        if (lifeExpectancy > 70) return "#FFA500"; // Oranje voor middelhoge levensverwachting
+        return "#D2042D"; // Rood voor lage levensverwachting
     }
     
 </script>

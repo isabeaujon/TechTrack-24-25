@@ -13,9 +13,6 @@
 		"typeRoots": [
 			"node_modules/@types"
 		],
-		"types": [
-			"leaflet"
-		]
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
 	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

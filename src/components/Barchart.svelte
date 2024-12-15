@@ -23,6 +23,12 @@
     // Schaalfuncties voor de X- en Y-as
     let xScale = (index: number) => index * (barWidth + spacing);
     let yScale = (value: number) => height - value * 3; // Schaal de Y-waarden voor visuele weergave
+
+    function getColorForLifeExpectancy(lifeExpectancy: number) {
+    if (lifeExpectancy > 80) return "#008000"; // Groen voor hoge levensverwachting
+    if (lifeExpectancy > 70) return "#FFA500"; // Oranje voor middelhoge levensverwachting
+    return "#D2042D"; // Rood voor lage levensverwachting
+}
 </script>
 
 <div>
@@ -56,7 +62,7 @@
                     y={yScale(value)}
                     width={barWidth}
                     height={value * 3}
-                    fill="teal"
+                    fill={getColorForLifeExpectancy(value)} 
                 />
                 <!-- X-positie van de staaf -->
                 <!-- Y-positie van de staaf -->
@@ -134,6 +140,7 @@
         position: absolute;
         font-size: 14px;
         text-align: left;
+        font-weight: 500;
     }
 
 
