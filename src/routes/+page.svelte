@@ -24,40 +24,28 @@
     let years: number[] = []; // Lijst van jaren (1960 - 2022)
 
     // Haal de data op bij het laden van de component
-    onMount(async () => {
-        try {
-            // Haal de CSV op
-            const response = await fetch("/Dataset_datavisualisatie_kopie.csv");
-            if (!response.ok) {
-                console.error("Fout bij het laden van CSV:", response.status, response.statusText);
-                return;
-            }
-
-            // Lees de tekst van de CSV
-            const csvText = await response.text();
-            console.log("CSV geladen:", csvText);
-
-            
-            // Converteer CSV naar data
-            lifeExpectancyData = convertCSVToGeoData(csvText);
-            filterLifeExpectancyByYear(selectedYear); // Filter direct op het geselecteerde jaar
-
-            // Zet de labels en data voor de barchart
-            labels = lifeExpectancyData.map((item) => item.country);
-            years = Object.keys(lifeExpectancyData[0].lifeExpectancy).map(
-                (year) => parseInt(year)
-            );
-            data = {};
-
-            // Vul de data voor de barchart per jaar
-            years.forEach((year) => {
-                data[year] = lifeExpectancyData.map(
-                    (item) => Math.round(item.lifeExpectancy[year] ?? 0)
-                );
-            });
-        } catch (error) {
-            console.error("Fout bij het ophalen van CSV:", error);
+   // In +page.svelte, zorg ervoor dat de data altijd up-to-date is
+onMount(async () => {
+    try {
+        const response = await fetch("/Dataset_datavisualisatie_kopie.csv");
+        if (!response.ok) {
+            console.error("Fout bij het laden van CSV:", response.status, response.statusText);
+            return;
         }
+        const csvText = await response.text();
+        lifeExpectancyData = convertCSVToGeoData(csvText);
+        filterLifeExpectancyByYear(selectedYear);
+        labels = lifeExpectancyData.map((item) => item.country);
+        years = Object.keys(lifeExpectancyData[0].lifeExpectancy).map((year) => parseInt(year));
+        data = {};
+        years.forEach((year) => {
+            data[year] = lifeExpectancyData.map((item) => Math.round(item.lifeExpectancy[year] ?? 0));
+        });
+    } catch (error) {
+        console.error("Fout bij het ophalen van CSV:", error);
+    }
+
+
     });
 
     // Functie om de CSV te converteren naar geo-data
@@ -139,7 +127,7 @@
 
     <!-- Barchart component voor het weergeven van de data in een grafiek -->
     <div class="barchart-container">
-        <Barchart {labels} {data} {years} />
+        <Barchart {labels} {data} {years} {selectedYear}/>
     </div>
 </main>
 

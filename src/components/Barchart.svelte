@@ -3,9 +3,11 @@
     export let labels: string[] = []; // Lijst van labels voor de barchart (landen)
     export let data: { [year: number]: number[] } = {}; // Data voor de barchart per jaar
     export let years: number[] = []; // Lijst van beschikbare jaren
+    export let selectedYear: number;  // Verander dit naar een prop
 
+
+    
     // Houdt het geselecteerde jaar bij (standaard is het eerste jaar in de lijst)
-    let selectedYear = years[0];
     let width = Math.max(700, labels.length * 40); // Dynamische breedte op basis van het aantal labels
     let height = 400; // Standaard hoogte van de grafiek
     const barWidth = 30; // Breedte van elke staaf
@@ -30,6 +32,8 @@
     return "#D2042D"; // Rood voor lage levensverwachting
 }
 </script>
+
+
 
 <div>
     <!-- Scroll-container voor de grafiek, zorgt ervoor dat de grafiek horizontaal gescrold kan worden -->
@@ -77,7 +81,6 @@
                     text-anchor="middle"
                     class="bar-label"
                 >
-                    {value}
                     <!-- Weergave van de waarde boven de staaf -->
                 </text>
             {/each}
@@ -113,7 +116,17 @@
             on:input={updateYear}
         />
     </div>
+
+    <div class="legend">
+        <div><span style="background-color: #008000;"></span> &gt; 80</div>
+        <div><span style="background-color: #FFA500;"></span> 70 - 80</div>
+        <div><span style="background-color: #D2042D;"></span> &lt; 70</div>
+    </div>
+    
+
 </div>
+
+
 
 <!-- Styling voor de barchart -->
 <style>
@@ -143,8 +156,6 @@
         font-weight: 500;
     }
 
-
-
     /* Stijl voor de Y-as labels */
     .y-axis-label {
         font-size: 12px;
@@ -158,4 +169,21 @@
         margin: 0 auto;
         overflow: visible;
     }
+
+    .legend {
+    display: flex;
+    margin-top: 10px;
+    }
+
+    .legend div {
+    margin-right: 20px;
+    }
+
+    .legend span {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    }
+
 </style>
