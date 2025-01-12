@@ -76,7 +76,7 @@
 
                 <!-- Voeg de waarde boven de staaf toe -->
                 <text
-                    x={xScale(index) + 55}
+                    x={xScale(index) + 40}
                     y={yScale(value) - 5}
                     text-anchor="middle"
                     class="bar-label"
@@ -104,7 +104,7 @@
     <!-- Slider voor het selecteren van het jaar -->
     <div>
         <label for="yearSlider"
-            >Slide tussen de jaren een jaar: {selectedYear}</label
+            >Slide door dejaren heen: {selectedYear}</label
         >
         <input
             id="yearSlider"
@@ -142,7 +142,7 @@
     .label-container {
         position: absolute;
         bottom: 30px;
-        left: 40px;
+        left: 0px;
         width: 100%;
         color: #f9f6ee;
         white-space: nowrap;
