@@ -104,7 +104,7 @@
     <!-- Slider voor het selecteren van het jaar -->
     <div>
         <label for="yearSlider"
-            >Slide door dejaren heen: {selectedYear}</label
+            >Slide door de jaren heen: {selectedYear}</label
         >
         <input
             id="yearSlider"
