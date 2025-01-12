@@ -73,16 +73,7 @@
                 <!-- Breedte van de staaf -->
                 <!-- Hoogte van de staaf (schaal) -->
                 <!-- Kleur van de staaf -->
-
-                <!-- Voeg de waarde boven de staaf toe -->
-                <text
-                    x={xScale(index) + 40}
-                    y={yScale(value) - 5}
-                    text-anchor="middle"
-                    class="bar-label"
-                >
-                    <!-- Weergave van de waarde boven de staaf -->
-                </text>
+              
             {/each}
         </svg>
 
@@ -141,8 +132,8 @@
     /* Container voor de labels onder de grafiek */
     .label-container {
         position: absolute;
-        bottom: 30px;
-        left: 0px;
+        bottom: 36px;
+        left: 11px;
         width: 100%;
         color: #f9f6ee;
         white-space: nowrap;
@@ -151,14 +142,14 @@
     /* Stijl voor elk label onder de staaf */
     .label {
         position: absolute;
-        font-size: 14px;
+        font-size: 15px;
         text-align: left;
         font-weight: 500;
     }
 
     /* Stijl voor de Y-as labels */
     .y-axis-label {
-        font-size: 12px;
+        font-size: 13px;
         text-anchor: middle;
         fill: gray;
         transform: translateX(10px); /* Verplaats de tekst iets naar rechts */
@@ -172,7 +163,7 @@
 
     .legend {
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
     }
 
     .legend div {
