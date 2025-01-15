@@ -24,28 +24,27 @@
     let years: number[] = []; // Lijst van jaren (1960 - 2022)
 
     // Haal de data op bij het laden van de component
-   // In +page.svelte, zorg ervoor dat de data altijd up-to-date is
-onMount(async () => {
+    onMount(async () => {
     try {
         const response = await fetch("/Dataset_datavisualisatie_kopie.csv");
         if (!response.ok) {
             console.error("Fout bij het laden van CSV:", response.status, response.statusText);
             return;
         }
+
         const csvText = await response.text();
+
         lifeExpectancyData = convertCSVToGeoData(csvText);
-        filterLifeExpectancyByYear(selectedYear);
         labels = lifeExpectancyData.map((item) => item.country);
         years = Object.keys(lifeExpectancyData[0].lifeExpectancy).map((year) => parseInt(year));
         data = {};
         years.forEach((year) => {
             data[year] = lifeExpectancyData.map((item) => Math.round(item.lifeExpectancy[year] ?? 0));
         });
+        
     } catch (error) {
         console.error("Fout bij het ophalen van CSV:", error);
     }
-
-
     });
 
     // Functie om de CSV te converteren naar geo-data
@@ -83,40 +82,21 @@ onMount(async () => {
         return data;
     }
 
-    // Functie om data te filteren per jaar
-    function filterLifeExpectancyByYear(year: number) {
-        selectedYear = year;
+    $: filteredLifeExpectancyData = lifeExpectancyData.map((item) => ({
+    ...item,
+    lifeExpectancy: { [selectedYear]: item.lifeExpectancy[selectedYear] ?? null },
+}));
 
-        // Filter de data voor de barchart op het geselecteerde jaar
-        filteredLifeExpectancyData = lifeExpectancyData.map((item) => ({
-            ...item,
-            lifeExpectancy: { [year]: item.lifeExpectancy[year] ?? null },
-        }));
-    }
 
-    // Reageer op veranderingen in geselecteerd jaar
-    $: filterLifeExpectancyByYear(selectedYear); // Update bij wijziging van selectedYear
+
 </script>
 
 <main>
     <h1>Levensverwachting</h1>
-    <h2>Een overzicht van de levensverwachting per land door de jaren heen.</h2>
+    <h2>Ontdek hoe de levensverwachting wereldwijd verschilt! Bekijk de cijfers op de wereldkaart voor 2022, en gebruik de slider om te zien hoe deze door de jaren heen verandert.</h2>
     <hr>
     
-    <p>Geselecteerd jaar: {selectedYear}</p>
-
-    <!-- Jaar selector -->
-    <select
-        on:change={(event) =>
-            filterLifeExpectancyByYear(
-                Number((event.target as HTMLSelectElement).value)
-            )
-        }
-    >
-        {#each Array.from({ length: 2022 - 1960 + 1 }, (_, i) => 1960 + i) as year}
-            <option value={year} selected={year === selectedYear}>{year}</option>
-        {/each}
-    </select>
+    <h3>Levensverwachting het jaar 2022</h3>
 
     <!-- Worldmap component voor het weergeven van de data op de kaart -->
     <div class="worldmap-container">
@@ -159,12 +139,5 @@ onMount(async () => {
         padding-right: 1em;
     }
 
-    /* Styling voor de jaar selector */
-    select {
-        padding: 0.5em;
-        margin: 1em 0;
-        font-size: 1rem;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
+
 </style>

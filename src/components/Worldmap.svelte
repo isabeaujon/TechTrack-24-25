@@ -18,12 +18,12 @@
     let map: any;
     let markersLayer: any;
 
-    // Dynamische import van Leaflet
+
     onMount(async () => {
         // Dynamisch importeren van Leaflet
         leaf = (await import("leaflet")).default;
 
-        // Maak de kaart aan
+        // Maakt de kaart aan
         map = leaf.map(mapContainer, {
             center: [20, 0],
             zoom: 2,
@@ -32,16 +32,16 @@
             dragging: false,
         });
 
-        // Voeg de OpenStreetMap-laag toe
+        // OpenStreetMap-laag
         leaf.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution:
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
-        // Maak een laag voor de markers
+        // Maakt een laag voor de markers
         markersLayer = leaf.layerGroup().addTo(map);
 
-        // Voeg een 'ready' event listener toe om de kaartgrootte te herberekenen
+        // Voegt een 'ready' event listener toe om de kaartgrootte te herberekenen
         map.whenReady(() => map.invalidateSize());
     });
 
@@ -61,18 +61,19 @@
         mapData.forEach((item) => {
             const lifeExpectancyYear = item.lifeExpectancy[selectedYear];
 
-            if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear)) return;
+            if (lifeExpectancyYear === null || isNaN(lifeExpectancyYear))
+                return;
 
             const color = getColorForLifeExpectancy(lifeExpectancyYear);
 
             leaf.circleMarker([item.lat, item.lng], {
                 color: color,
                 radius: 8,
-                weight: 2,
+                weight: 1,
                 fillOpacity: 0.6,
             })
                 .bindPopup(
-                    `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(lifeExpectancyYear)}`
+                    `<b>${item.country}</b><br>Levensverwachting in ${selectedYear}: ${Math.round(lifeExpectancyYear)}`,
                 )
                 .addTo(markersLayer);
         });
