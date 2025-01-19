@@ -31,6 +31,6 @@ npm run dev
 
 
 ## Gemaakt door:
-Naam: Isa Beaujon
-Studentnummer: 500798069
+Naam: Isa Beaujon <br>
+Studentnummer: 500798069 <br>
 Vak: Minor information design - tech track
