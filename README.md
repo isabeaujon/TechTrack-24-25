@@ -17,16 +17,16 @@ Als je liever alle landen naast elkaar wilt zien zonder telkens op een land te m
 
 ## Installatie en gebruik
 1. Clone de Repository: Open de terminal en voer de volgende commando uit:
-git clone https://github.com/Bryan-OF/TechTrack_23-24.git
+git clone https://github.com/isabeaujon/TechTrack-24-25.git
 
 2. npm install
 
 3. Start de server: 
 npm run dev
 
-4. Dit zal de applicatie beschikbaar maken op http://localhost:5713
+4. Dit zal de applicatie beschikbaar maken op http://localhost:5173
 
-5. Open je webbrowser en ga naar http://localhost:5713
+5. Open je webbrowser en ga naar http://localhost:5173
 
 
 
