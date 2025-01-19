@@ -93,7 +93,7 @@
 
 <main>
     <h1>Levensverwachting</h1>
-    <h2>Ontdek hoe de levensverwachting wereldwijd verschilt! Bekijk de cijfers op de wereldkaart voor 2022, en gebruik de slider om te zien hoe deze door de jaren heen verandert.</h2>
+    <h2>Ontdek hoe de levensverwachting wereldwijd verschilt! Bekijk de cijfers op de wereldkaart voor 2022. En gebruik de slider in de barchart onderin om te zien hoe deze door de jaren heen verandert.</h2>
     <hr>
     
     <h3>Levensverwachting in het jaar 2022</h3>
